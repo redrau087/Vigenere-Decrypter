@@ -19,3 +19,6 @@ Once you know the key length, you can adjust the position of the highest frequen
 4. This result is the single character key for the portion of cipher text
 
 This is repeated for each character of the key and with each separated cipher text string until the entire key is discovered
+
+
+To see what the code does, read the markdown files to get information
