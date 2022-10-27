@@ -29,7 +29,8 @@ Once you know the key length, you can adjust the position of the highest frequen
 4. This result is the single character key for the split portion of cipher text. This is repeated for each character of the key and with each split cipher text string until the entire key is discovered
 
 
-To see what the code does, read the markdown files to get information
+To see what the code does, read 
+[Analyzer.md](https://github.com/redrau087/Vigenere-Decryptor/blob/main/Analyzer.md) and [Decrypter.md](https://github.com/redrau087/Vigenere-Decryptor/blob/main/Decrypter.md)  
 
 ## Additional resources:
 [The Vigenere Cipher: Frequency Analysis](https://pages.mtu.edu/~shene/NSF-4/Tutorial/VIG/Vig-Frequency-Analysis.html)  

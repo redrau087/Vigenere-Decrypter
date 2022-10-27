@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace VigenereDecryptionTools
@@ -62,7 +64,7 @@ namespace VigenereDecryptionTools
         {
             StringBuilder[] stringBuilders = new StringBuilder[keyLength];
             for (int x = 0; x < keyLength; x++)
-                stringBuilders[x] = new();
+                stringBuilders[x] = new StringBuilder();
 
             for (int x = 0; x < cipherText.Length; x++)
                 stringBuilders[x % keyLength].Append(cipherText[x]);
@@ -77,7 +79,7 @@ namespace VigenereDecryptionTools
         /// <returns>The key length or 0 if not found</returns>
         public ushort FindKeyLength()
         {
-            StringAnalyzer analyzer = new();
+            StringAnalyzer analyzer = new StringAnalyzer();
             string cipherText;
             for (byte x = 1; x < byte.MaxValue; x++)
             {
@@ -102,7 +104,7 @@ namespace VigenereDecryptionTools
         /// <returns>Each character of the key as it's discovered</returns>
         private IEnumerable<char> FindKey(ushort keyLength)
         {
-            StringAnalyzer analyzer = new();
+            StringAnalyzer analyzer = new StringAnalyzer();
 
             foreach (string cipher in SeparateStrings(keyLength))
             {
@@ -127,7 +129,7 @@ namespace VigenereDecryptionTools
         /// <returns>The decrypted plaintext</returns>
         public string Decrypt(string keyIn)
         {
-            StringBuilder sb = new();
+            StringBuilder sb = new StringBuilder();
             for (int x = 0; x < cipherText.Length; x++)
                 sb.Append(DecryptSingleChar(cipherText[x], keyIn[x % keyIn.Length]));
 
