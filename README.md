@@ -11,7 +11,7 @@ Example:
 
 > "ABCDEFGHIJKLMNOPQRSTUVWXYZ" with a key length of 2 should be split into  
 > "ACEGIKMOQSUWY" and "BDFHJLNPRTVXZ"  
->       K1                  k2 
+>       K1                  K2  
 The first split text would be encrypted with K1 and the second would be encrypted with K2, meaning you can each piece of split text can be treated as its own cipher text. This allows you to run frequency analysis on just one of the pieces of split text to determine the key length.
 
 
