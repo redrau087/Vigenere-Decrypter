@@ -22,3 +22,7 @@ This is repeated for each character of the key and with each separated cipher te
 
 
 To see what the code does, read the markdown files to get information
+
+##Additional resources:
+[The Vigenere Cipher: Frequency Analysis](https://pages.mtu.edu/~shene/NSF-4/Tutorial/VIG/Vig-Frequency-Analysis.html)
+[The Vigenere Cipher -- A Polyalphabetic Cipher](http://www.cs.trincoll.edu/cryptography/vigenere.html)
