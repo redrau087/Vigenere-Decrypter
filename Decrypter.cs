@@ -1,7 +1,9 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
-namespace VigenerDecryptionTools
+namespace VigenereDecryptionTools
 {
     /// <summary>
     /// Holds the ciphertext input and can use frequency analysis to determine the encryption key and decrypt
