@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 
 namespace VigenerDecryptionTools
@@ -23,8 +23,7 @@ namespace VigenerDecryptionTools
         }
         #endregion
 
-        #region Instance Methods
-
+        #region Static Methods
         /// <summary>
         /// Iterates through each character in the provided cipher text and decrypts it using the given key
         /// </summary>
@@ -51,7 +50,9 @@ namespace VigenerDecryptionTools
             temp += (byte)'A';
             return (char)temp;
         }
+        #endregion
 
+        #region Instance Methods
         /// <summary>
         /// Separates strings for encryption by each character of the key
         /// </summary>
