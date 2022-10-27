@@ -30,7 +30,13 @@ Once you know the key length, you can adjust the position of the highest frequen
 
 
 To see what the code does, read 
-[Analyzer.md](https://github.com/redrau087/Vigenere-Decryptor/blob/main/Analyzer.md) and [Decrypter.md](https://github.com/redrau087/Vigenere-Decryptor/blob/main/Decrypter.md)  
+[Analyzer.md](https://github.com/redrau087/Vigenere-Decryptor/blob/main/Markdown%20and%20XML/Analyzer.md) and [Decrypter.md](https://github.com/redrau087/Vigenere-Decryptor/blob/main/Markdown%20and%20XML/Decrypter.md)  
+
+To run the code
+[Download the exe for Windows](https://github.com/redrau087/Vigenere-Decryptor/program.exe) OR
+[Dowload the docker image](https://hub.docker.com/repository/docker/redrau087/vigenerecipherdecrypter/general)
+
+
 
 ## Additional resources:
 [The Vigenere Cipher: Frequency Analysis](https://pages.mtu.edu/~shene/NSF-4/Tutorial/VIG/Vig-Frequency-Analysis.html)  
