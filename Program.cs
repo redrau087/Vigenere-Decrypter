@@ -27,8 +27,12 @@ namespace VigenereDecryptionTools
                 File.WriteAllText(plaintextFile, plaintext);
 
 
-                Console.WriteLine($"\nPlaintext file has been written to {plaintextFile}");
-                Console.ReadKey();
+                Console.WriteLine($"\nPlaintext file has been written to {plaintextFile}\n");
+
+                Console.WriteLine("Printing the first 5000 characters of the decrypted text in 10 seconds\n");
+                System.Threading.Thread.Sleep(10000);
+                Console.Write(plaintext.Substring(0, 5000));
+
             }
             catch (Exception e)
             {
