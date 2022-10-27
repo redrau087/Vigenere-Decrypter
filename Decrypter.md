@@ -1,12 +1,12 @@
 # Decrypter
-Holds the cipher text input as a private string
+Holds the ciphertext input and can use frequency analysis to determine the encryption key and decrypt
 
 ### Decrypter Constructor
 >Return type: Decrypter  
 >Accessibility: public  
 >Parameters: string cipherTextIn
 
-Takes the whole cipher text string as input
+Default constructor that takes the cipher text string as input
 
 ### DecryptSingleKey
 >Return type: IEnumerable<char>  

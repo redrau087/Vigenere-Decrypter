@@ -1,5 +1,5 @@
 # StringAnalyzer
-Uses an unsigned integer array of length 26 to hold the total number of occurrences for each letter
+Uses an unsigned integer array of length 26 to hold the total number of occurrences for each letter. This can be used for frequency analysis
 
 ### TotalCharacters Property
 >Return type: uint
@@ -25,6 +25,8 @@ Returns the frequency of the least common character as a percentage
 >Return type: StringAnalyzer  
 >Accessibility: public  
 >Parameters: None  
+
+Default Constructor
 
 ### Analyze
 >Return type: void  
