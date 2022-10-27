@@ -31,7 +31,7 @@ namespace VigenerDecryptionTools
         /// <param name="cipherTextIn">The cipher text to decrypt</param>
         /// <param name="key">The key to be used for decryption</param>
         /// <returns>The decrypted characters</returns>
-        private IEnumerable<char> DecryptSingleKey(string cipherTextIn, char key)
+        private static IEnumerable<char> DecryptSingleKey(string cipherTextIn, char key)
         {
             foreach (char currentChar in cipherTextIn)
                 yield return DecryptSingleChar(currentChar, key);
@@ -43,7 +43,7 @@ namespace VigenerDecryptionTools
         /// <param name="cipherCharIn">The character to be decrypted</param>
         /// <param name="key">The decryption key</param>
         /// <returns>The decrypted character</returns>
-        private char DecryptSingleChar(char cipherCharIn, char key)
+        private static char DecryptSingleChar(char cipherCharIn, char key)
         {
             byte temp = (byte)(cipherCharIn - 'A' + 26);
             temp -= (byte)(key - 'A');
