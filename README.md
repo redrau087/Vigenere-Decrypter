@@ -10,18 +10,22 @@ Uses an unsigned integer array of length 26 to hold the total number of occurren
 
 ### TotalCharacters Property
 >Return type: uint
+
 Returns the total number of characters analyzed
 
 ### HighestProbabilityCharacter
 >Return type: char
+
 Returns the character that has appeared the most in the analysis
 
 ### HighestProbability
 >Return type: double
+
 Returns the frequency of the most common character as a percentage
 
 ### LowestProbability
 >Return type: double
+
 Returns the frequency of the least common character as a percentage
 
 ### StringAnalyzer Constructor
@@ -33,12 +37,14 @@ Returns the frequency of the least common character as a percentage
 >Return type: void
 >Accessibility: public
 >Parameters: string or IEnumerable<char>
+
 Increments the counter for the specific character that was input to the analyzer
 
 ### Clear
 >Return type: void
 >Accessibility: public
 >Parameters: None
+
 Clears the counters for each character to reset the analyzer
 
 
@@ -51,10 +57,12 @@ Holds the cipher text input as a private string
 >Return type: Decrypter
 >Accessibility: public
 >Parameters: string
+
 Takes the whole cipher text string as input
 
 ###DecryptSingleKey
 >Return type: IEnumerable<char>
 >Accessibility: private
 >Parameters: string, char
+
 Iterates through each char in the provided cipher text and decrypts it using the given key
