@@ -1,5 +1,5 @@
 ﻿using System.IO;
-namespace FrequencyAnalyzer
+namespace VigenerDecryptionTools
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace FrequencyAnalyzer
         {
             try
             {
-                Decryptor cipher = new Decryptor(File.ReadAllText(ciphertextFile));
+                Decrypter cipher = new Decrypter(File.ReadAllText(ciphertextFile));
 
 
                 Console.WriteLine($"Encryption Key Found: \"{cipher.FindEncryptionKey()}\"");
