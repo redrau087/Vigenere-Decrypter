@@ -2,6 +2,9 @@
 
 namespace VigenerDecryptionTools
 {
+    /// <summary>
+    /// Uses an unsigned integer array of length 26 to hold the total number of occurrences for each letter. This can be used for frequency analysis
+    /// </summary>
     public class StringAnalyzer
     {
         #region Private Variables
@@ -9,6 +12,9 @@ namespace VigenerDecryptionTools
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Returns the total number of characters analyzed
+        /// </summary>
         public uint TotalCharacters
         {
             get
@@ -21,6 +27,9 @@ namespace VigenerDecryptionTools
             }
         }
 
+        /// <summary>
+        /// Returns the character that has appeared the most in the analysis
+        /// </summary>
         public char HighestProbabilityCharacter
         {
             get
@@ -33,6 +42,9 @@ namespace VigenerDecryptionTools
             }
         }
 
+        /// <summary>
+        /// Returns the frequency of the most common character as a percentage
+        /// </summary>
         public double HighestProbability
         {
             get
@@ -41,6 +53,9 @@ namespace VigenerDecryptionTools
             }
         }
 
+        /// <summary>
+        /// Returns the frequency of the least common character as a percentage
+        /// </summary>
         public double LowestProbability
         {
             get
@@ -51,6 +66,9 @@ namespace VigenerDecryptionTools
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public StringAnalyzer() { }
         #endregion
 
@@ -69,7 +87,7 @@ namespace VigenerDecryptionTools
         }
 
         /// <summary>
-        /// Wrapper for Analyze(IEnumerable<char>)
+        /// Wrapper for Analyze(IEnumerable)
         /// </summary>
         /// <param name="textIn">The input text to be analyzed</param>
         public void Analyze(string textIn) => Analyze(textIn.AsEnumerable());

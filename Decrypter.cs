@@ -3,6 +3,9 @@ using System.Text;
 
 namespace VigenerDecryptionTools
 {
+    /// <summary>
+    /// Holds the ciphertext input and can use frequency analysis to determine the encryption key and decrypt
+    /// </summary>
     public class Decrypter
     {
         #region Private Variables
@@ -10,6 +13,10 @@ namespace VigenerDecryptionTools
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Default constructor that takes the cipher text string as input
+        /// </summary>
+        /// <param name="cipherTextIn">The cipher text</param>
         public Decrypter(string cipherTextIn)
         {
             cipherText = cipherTextIn;
@@ -109,7 +116,6 @@ namespace VigenerDecryptionTools
         /// <summary>
         /// Finds and returns the key used for encrypting the ciphertext as a string
         /// </summary>
-        /// <param name="maxKeyLength">The max possible key length to check</param>
         /// <returns>The key string</returns>
         public string FindEncryptionKey() => new string(FindKey(FindKeyLength()).ToArray());
 
