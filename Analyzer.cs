@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VigenerDecryptionTools
+namespace VigenereDecryptionTools
 {
     /// <summary>
     /// Uses an unsigned integer array of length 26 to hold the total number of occurrences for each letter. This can be used for frequency analysis
