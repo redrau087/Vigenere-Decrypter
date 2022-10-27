@@ -1,10 +1,8 @@
 ﻿using System.IO;
-namespace VigenerDecryptionTools
+namespace VigenereDecryptionTools
 {
     static class Program
     {
-        //You must set this to the ciphertext file
-        private const string ciphertextFile = @"ciphertext.txt";
         //this will be the plaintext output file
         private const string plaintextFile = @"plaintext.txt";
 
@@ -14,24 +12,30 @@ namespace VigenerDecryptionTools
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
-            try
+            if (args.Length != 0)
             {
-                Decrypter cipher = new Decrypter(File.ReadAllText(ciphertextFile));
+                try
+                {
+                    Decrypter cipher = new Decrypter(File.ReadAllText(args[0]));
+
+                    string key = cipher.FindEncryptionKey();
+
+                    Console.WriteLine($"Encryption Key Found: \"{key}\"");
+
+                    string plaintext = cipher.Decrypt(key);
+                    File.WriteAllText(plaintextFile, plaintext);
 
 
-                Console.WriteLine($"Encryption Key Found: \"{cipher.FindEncryptionKey()}\"");
-
-                string plaintext = cipher.Decrypt();
-                File.WriteAllText(plaintextFile, plaintext);
-
-
-                Console.WriteLine("\nPlaintext file has been written");
-                Console.ReadKey();
+                    Console.WriteLine($"\nPlaintext file has been written to {plaintextFile}");
+                    Console.ReadKey();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            else
+                Console.WriteLine("You must pass the name of the ciphertext file");
         }
     }
 }
