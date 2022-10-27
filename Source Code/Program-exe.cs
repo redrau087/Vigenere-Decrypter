@@ -4,8 +4,6 @@ namespace VigenereDecryptionTools
 {
     static class Program
     {
-        //this will be the ciphertext file
-        private const string ciphertextFile = @"ciphertext.txt";
         //this will be the plaintext output file
         private const string plaintextFile = @"plaintext.txt";
 
@@ -17,6 +15,13 @@ namespace VigenereDecryptionTools
         {
             try
             {
+            	string ciphertextFile = "";
+            	while (!File.Exists(ciphertextFile))
+            	{
+            		Console.WriteLine("Input the CORRECT path/name of the ciphertext file");
+            		ciphertextFile = Console.ReadLine();
+            	}
+            	
                 Decrypter cipher = new Decrypter(File.ReadAllText(ciphertextFile));
 
                 string key = cipher.FindEncryptionKey();
