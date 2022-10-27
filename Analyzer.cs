@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FrequencyAnalyzer
+namespace VigenerDecryptionTools
 {
     public class StringAnalyzer
     {
@@ -75,17 +75,7 @@ namespace FrequencyAnalyzer
         public void Analyze(string textIn) => Analyze(textIn.AsEnumerable());
 
         /// <summary>
-        /// Displays the analyzed frequency of each letter as a percentage
-        /// </summary>
-        /// <returns>A string containing the letter along with the frequency percentage of that letter</returns>
-        public IEnumerable<string> DisplayFrequencyPercentage()
-        {
-            for (int x = 0; x < 26; x++)
-                yield return ($"{(char)((byte)'A' + x)}: {characterCount[x] / (Convert.ToDouble(TotalCharacters) / 100.0)}%");
-        }
-
-        /// <summary>
-        /// Clears the analyzed data
+        /// Clears the counters for each character to reset the analyzer
         /// </summary>
         public void Clear()
         {

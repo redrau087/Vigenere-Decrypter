@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Text;
 
-namespace FrequencyAnalyzer
+namespace VigenerDecryptionTools
 {
-    public class Decryptor
+    public class Decrypter
     {
         #region Private Variables
         private string cipherText;
         #endregion
 
         #region Constructors
-        public Decryptor(string cipherTextIn)
+        public Decrypter(string cipherTextIn)
         {
             cipherText = cipherTextIn;
         }
@@ -19,7 +19,7 @@ namespace FrequencyAnalyzer
         #region Instance Methods
 
         /// <summary>
-        /// Performs the caesar shift cipher decryption with the given ciphertext and key
+        /// Iterates through each character in the provided cipher text and decrypts it using the given key
         /// </summary>
         /// <param name="cipherTextIn">The cipher text to decrypt</param>
         /// <param name="key">The key to be used for decryption</param>
@@ -46,7 +46,7 @@ namespace FrequencyAnalyzer
         }
 
         /// <summary>
-        /// Separates strings for encryption by each character using the vigenere cypher
+        /// Separates strings for encryption by each character of the key
         /// </summary>
         /// <param name="keyLength">The length of the key</param>
         /// <returns>The separated strings to decrypt using a single character key</returns>
@@ -88,7 +88,7 @@ namespace FrequencyAnalyzer
         }
 
         /// <summary>
-        /// Performs numerous caesar shift ciphers to discover each character of the key at a time
+        /// Finds the key by determining the distance between 'E' and the most frequent letter analyzed to discover each character of the key at a time
         /// </summary>
         /// <param name="keyLength"></param>
         /// <returns>Each character of the key as it's discovered</returns>
@@ -107,7 +107,7 @@ namespace FrequencyAnalyzer
         }
 
         /// <summary>
-        /// Finds and returns the key used for encrypting the ciphertext
+        /// Finds and returns the key used for encrypting the ciphertext as a string
         /// </summary>
         /// <param name="maxKeyLength">The max possible key length to check</param>
         /// <returns>The key string</returns>
