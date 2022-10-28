@@ -10,7 +10,7 @@ When attempting to determine the key length, frequency analysis is extremely hel
 Example:
 
 > "ABCDEFGHIJKLMNOPQRSTUVWXYZ" with a key of "K1K2" should be split into  
-> "ACEGIKMOQSUWY" which was would be encrypted with K1 and "BDFHJLNPRTVXZ" which would be encrypted with K2 
+> "ACEGIKMOQSUWY" which would be encrypted with K1 and "BDFHJLNPRTVXZ" which would be encrypted with K2 
  
 The first split text would be encrypted with K1 and the second would be encrypted with K2, meaning you can each piece of split text can be treated as its own cipher text. This allows you to run frequency analysis on just one of the pieces of split text to determine the key length.
 
@@ -33,8 +33,8 @@ Once you know the key length, you can adjust the single character key to best al
 4. This result is the single character key for the split portion of cipher text. This is repeated for each character of the key and with each split cipher text string until the entire key is discovered
 
 
-To see what the code does, read 
-[Analyzer.md](https://github.com/redrau087/Vigenere-Decryptor/blob/main/Markdown%20and%20XML/Analyzer.md) and [Decrypter.md](https://github.com/redrau087/Vigenere-Decryptor/blob/main/Markdown%20and%20XML/Decrypter.md)  
+To see what the code does, check the source code
+[Analyzer.cs](https://github.com/redrau087/Vigenere-Decrypter/blob/main/Source%20Code/Analyzer.cs) and [Decrypter.cs](https://github.com/redrau087/Vigenere-Decrypter/blob/main/Source%20Code/Decrypter.cs)  
 
 To run the code [Download the exe for Windows](https://github.com/redrau087/Vigenere-Decrypter/raw/main/program.exe)  
 The program will automatically prompt the user for the ciphertext input file, the max key length to test, and if they would like to have each step explained as it solves  
