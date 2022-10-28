@@ -45,4 +45,5 @@ This program can take a large amount of time with large cipher texts (around a m
 ## Additional resources:
 [The Vigenere Cipher: Frequency Analysis](https://pages.mtu.edu/~shene/NSF-4/Tutorial/VIG/Vig-Frequency-Analysis.html)  
 [The Vigenere Cipher -- A Polyalphabetic Cipher](http://www.cs.trincoll.edu/cryptography/vigenere.html)  
-[Letter Frequency](https://en.wikipedia.org/wiki/Letter_frequency)
+[Letter Frequency](https://en.wikipedia.org/wiki/Letter_frequency)  
+[Cracking Caesar Cipher (Many graphs to visualize data)](https://jrinconada.medium.com/cracking-caesar-cipher-8fe79226aabd) 
