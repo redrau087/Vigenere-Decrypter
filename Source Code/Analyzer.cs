@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace VigenereDecryptionTools
 {
@@ -11,6 +12,12 @@ namespace VigenereDecryptionTools
     {
         #region Private Variables
         private protected uint[] characterCount = new uint[26];
+        private protected const double standardMean = 100.0 / 26.0;
+        private protected readonly double[] standardFrequency = new double[26]
+        {
+            8.2, 1.5, 2.8, 4.3, 13, 2.2, 2, 6.1, 7, 0.15, 0.77, 4, 2.4,
+            6.7, 7.5, 1.9, 0.095, 6, 6.3, 9.1, 2.8, 0.98, 2.4, 0.15, 2, 0.074
+        };
         #endregion
 
         #region Properties
@@ -30,39 +37,63 @@ namespace VigenereDecryptionTools
         }
 
         /// <summary>
-        /// Returns the character that has appeared the most in the analysis
+        /// Returns a formatted string with the percentage frequency of a letter
         /// </summary>
-        public char HighestProbabilityCharacter
+        public string FormattedLetterFrequencies
         {
             get
             {
-                byte index = 0;
-                for (byte x = 1; x < 26; x++)
-                    if (characterCount[x] > characterCount[index])
-                        index = x;
-                return (char)('A' + index);
+                StringBuilder sb = new StringBuilder();
+                double totalCharacters = Convert.ToDouble(TotalCharacters) / 100.0; //save the value so it's not recalculated each time
+                for (byte x = 0; x < 26; x++)
+                    sb.Append((char)(x + 'A')).Append(": ").Append(characterCount[x] / totalCharacters).Append("%\n");
+
+                return sb.ToString();
             }
         }
 
         /// <summary>
-        /// Returns the frequency of the most common character as a percentage
+        /// Returns the frequency of each letter as a percentage
         /// </summary>
-        public double HighestProbability
+        public IEnumerable<double> LetterFrequencies
         {
             get
             {
-                return characterCount.Max() / (Convert.ToDouble(TotalCharacters) / 100.0);
+                double totalCharacters = Convert.ToDouble(TotalCharacters) / 100.0; //save the value so it's not recalculated each time
+                foreach (uint value in characterCount)
+                    yield return value / totalCharacters;
             }
         }
 
         /// <summary>
-        /// Returns the frequency of the least common character as a percentage
+        /// Returns the mean absolute deviation of the letter frequencies
         /// </summary>
-        public double LowestProbability
+        public double MeanAbsoluteDeviation
         {
             get
             {
-                return characterCount.Min() / (Convert.ToDouble(TotalCharacters) / 100.0);
+                double totalDifference = 0;
+
+                foreach (double frequency in LetterFrequencies)
+                    totalDifference += Math.Abs(standardMean - frequency);
+
+                return totalDifference / 26;
+            }
+        }
+
+        /// <summary>
+        /// Scores the frequency by how close it is to a standard english frequency
+        /// </summary>
+        public double DeviationFromStandardFrequency
+        {
+            get
+            {
+                double totalDifference = 0;
+                double[] frequencies = LetterFrequencies.ToArray();
+                for (int x = 0; x < 26; x++)
+                    totalDifference += Math.Abs(standardFrequency[x] - frequencies[x]);
+
+                return totalDifference / 26;
             }
         }
         #endregion
