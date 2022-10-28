@@ -16,12 +16,17 @@ namespace VigenereDecryptionTools
 
         #region Constructors
         /// <summary>
-        /// Default constructor that takes the cipher text string as input
+        /// Default constructor that takes the cipher text string as input and removes any non-letter characters
         /// </summary>
         /// <param name="cipherTextIn">The cipher text</param>
         public Decrypter(string cipherTextIn)
         {
-            cipherText = cipherTextIn;
+            string temp = cipherTextIn;
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in temp)
+                if (Char.IsLetter(c))
+                    sb.Append(c);
+            cipherText = sb.ToString();
         }
         #endregion
 
