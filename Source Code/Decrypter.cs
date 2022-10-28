@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using VigenereTools;
 
 namespace VigenereDecryptionTools
 {
@@ -30,94 +31,82 @@ namespace VigenereDecryptionTools
         }
         #endregion
 
-        #region Static Methods
-        /// <summary>
-        /// Iterates through each character in the provided cipher text and decrypts it using the given key
-        /// </summary>
-        /// <param name="cipherTextIn">The cipher text to decrypt</param>
-        /// <param name="key">The key to be used for decryption</param>
-        /// <returns>The decrypted characters</returns>
-        private static IEnumerable<char> DecryptSingleKey(string cipherTextIn, char key)
-        {
-            foreach (char currentChar in cipherTextIn)
-                yield return DecryptSingleChar(currentChar, key);
-        }
-
-        /// <summary>
-        /// Decrypts one character with the given key using a caesar shift cipher
-        /// </summary>
-        /// <param name="cipherCharIn">The character to be decrypted</param>
-        /// <param name="key">The decryption key</param>
-        /// <returns>The decrypted character</returns>
-        private static char DecryptSingleChar(char cipherCharIn, char key)
-        {
-            byte temp = (byte)(cipherCharIn - 'A' + 26);
-            temp -= (byte)(key - 'A');
-            temp %= 26;
-            temp += (byte)'A';
-            return (char)temp;
-        }
-        #endregion
-
         #region Instance Methods
-        /// <summary>
-        /// Separates strings for encryption by each character of the key
-        /// </summary>
-        /// <param name="keyLength">The length of the key</param>
-        /// <returns>The separated strings to decrypt using a single character key</returns>
-        private IEnumerable<string>SeparateStrings(int keyLength)
-        {
-            StringBuilder[] stringBuilders = new StringBuilder[keyLength];
-            for (int x = 0; x < keyLength; x++)
-                stringBuilders[x] = new StringBuilder();
-
-            for (int x = 0; x < cipherText.Length; x++)
-                stringBuilders[x % keyLength].Append(cipherText[x]);
-
-            foreach (StringBuilder sb in stringBuilders)
-                yield return sb.ToString();
-        }
-
         /// <summary>
         /// Performs a frequency analysis testing multiple different key lengths to determine the most probable key length
         /// </summary>
         /// <returns>The key length or 0 if not found</returns>
-        public ushort FindKeyLength()
+        public byte FindKeyLength(byte maxLength)
         {
             StringAnalyzer analyzer = new StringAnalyzer();
-            string cipherText;
-            for (byte x = 1; x < byte.MaxValue; x++)
+            string cipher;
+            double lowestScore = 100.0;
+            double currentScore;
+
+            byte bestKeySize = 1;
+            double bestKeySizeScore = 100.0;
+
+
+            for (byte x = 1; x < maxLength; x++) //max testing size is 20
             {
-                analyzer.Clear(); //clear analysis from previous test
-
-                cipherText = SeparateStrings(x).ToArray()[0];
+                analyzer.Clear();
+                cipher = Vigenere.SeparateStrings(cipherText, x).ToArray()[0];
                 //we only need to check one of the new strings for frequency analysis so we can select only the first
-                analyzer.Analyze(cipherText);
 
-                if (analyzer.HighestProbability > 10 && analyzer.LowestProbability < 1)
-                    //one letter should be ~13% and multiple should be less than 1% so we can return if this is found
-                    return x;
+                analyzer.Analyze(cipherText);
+                lowestScore = analyzer.DeviationFromStandardFrequency;
+                for (byte y = 0; y < 26; y++)
+                {
+                    analyzer.Clear(); //clear analysis from previous test
+                    analyzer.Analyze(Caesar.Decrypt(cipher, (char)('A' + y)));
+                    currentScore = analyzer.DeviationFromStandardFrequency;
+                    if (currentScore < lowestScore)
+                        lowestScore = currentScore;
+                }
+                if (lowestScore < bestKeySizeScore)
+                {
+                    bestKeySizeScore = lowestScore;
+                    bestKeySize = x;
+                }
             }
 
-            return 0;
+            return bestKeySize;
         }
 
         /// <summary>
-        /// Finds the key by determining the distance between 'E' and the most frequent letter analyzed to discover each character of the key at a time
+        /// Finds the key by determining the closest alignment between the standard frequency and the decrypted ciphertext
         /// </summary>
         /// <param name="keyLength"></param>
         /// <returns>Each character of the key as it's discovered</returns>
-        private IEnumerable<char> FindKey(ushort keyLength)
+        private IEnumerable<char> FindKey(byte keyLength)
         {
             StringAnalyzer analyzer = new StringAnalyzer();
+            double currentScore;
+            double lowestScore;
+            byte lowestScoreIndex;
 
-            foreach (string cipher in SeparateStrings(keyLength))
+            foreach (string cipher in Vigenere.SeparateStrings(cipherText, keyLength))
             {
                 analyzer.Clear();
 
-                analyzer.Analyze(DecryptSingleKey(cipher, 'A'));
+                analyzer.Analyze(Caesar.Decrypt(cipher, 'A'));
+                lowestScore = analyzer.DeviationFromStandardFrequency;
+                lowestScoreIndex = 0;
 
-                yield return (char)(analyzer.HighestProbabilityCharacter - 'E' + 'A');
+                for (byte x = 1; x < 26; x++)
+                {
+                    analyzer.Clear();
+                    analyzer.Analyze(Caesar.Decrypt(cipher, (char)('A' + x)));
+                    currentScore = analyzer.DeviationFromStandardFrequency;
+
+                    if (currentScore < lowestScore)
+                    {
+                        lowestScore = currentScore;
+                        lowestScoreIndex = x;
+                    }
+                }
+
+                yield return (char)('A' + lowestScoreIndex);
             }
         }
 
@@ -125,28 +114,132 @@ namespace VigenereDecryptionTools
         /// Finds and returns the key used for encrypting the ciphertext as a string
         /// </summary>
         /// <returns>The key string</returns>
-        public string FindEncryptionKey() => new string(FindKey(FindKeyLength()).ToArray());
+        public string FindEncryptionKey(byte maxLength) => new string(FindKey(FindKeyLength(maxLength)).ToArray());
 
         /// <summary>
         /// Decrypts the ciphertext using the given key
         /// </summary>
         /// <param name="keyIn">The encryption/decryption key</param>
         /// <returns>The decrypted plaintext</returns>
-        public string Decrypt(string keyIn)
-        {
-            StringBuilder sb = new StringBuilder();
-            for (int x = 0; x < cipherText.Length; x++)
-                sb.Append(DecryptSingleChar(cipherText[x], keyIn[x % keyIn.Length]));
-
-            return sb.ToString();
-        }
+        public string Decrypt(string keyIn) => Vigenere.Decrypt(cipherText, keyIn);
 
         /// <summary>
         /// A wrapper for Decrypt(string) that does not require you to input the key
         /// </summary>
         /// <returns>The decrypted plaintext</returns>
-        public string Decrypt() => Decrypt(FindEncryptionKey());
+        public string Decrypt() => Decrypt(FindEncryptionKey(20));
+        #endregion
+
+        #region Explaining
+        /// <summary>
+        /// Decrypts the ciphertext and explains the steps to finding the key while solving
+        /// </summary>
+        public void DecryptAndExplain()
+        {
+            //To decrypt the ciphertext we must find the key but to find the key the first step is to find the length of the key
+            //Incorrect key lengths will have irregular letter frequencies. We can exploit this by testing different key lengths until we find a normal-looking distribution
+            string key = FindEncryptionKeyAndExplain(FindKeyLengthAndExplain(20));
+            string plain = Decrypt(key);
+            Console.WriteLine($"\n\nKey found: {key}\n\nPlaintext: {((plain.Length > 1000) ? plain.Substring(0, 1000) : plain)}");
+        }
+
+        /// <summary>
+        /// Finds the length of the key used to encrypt the cipher text and explains the process
+        /// </summary>
+        /// <returns>The key length</returns>
+        public byte FindKeyLengthAndExplain(byte maxLength)
+        {
+            StringAnalyzer analyzer = new StringAnalyzer();
+            string cipher;
+            double lowestScore = 100.0;
+            double currentScore;
+
+            byte bestKeySize = 1;
+            double bestKeySizeScore = 100.0;
+
+
+            for (byte x = 1; x < maxLength; x++) //max testing size is 20
+            {
+                analyzer.Clear();
+                cipher = Vigenere.SeparateStrings(cipherText, x).ToArray()[0];
+                //we only need to check one of the new strings for frequency analysis so we can select only the first
+
+                analyzer.Analyze(cipherText);
+                lowestScore = analyzer.DeviationFromStandardFrequency;
+                for (byte y = 0; y < 26; y++)
+                {
+                    analyzer.Clear(); //clear analysis from previous test
+                    analyzer.Analyze(Caesar.Decrypt(cipher, (char)('A' + y)));
+                    currentScore = analyzer.DeviationFromStandardFrequency;
+                    if (currentScore < lowestScore)
+                        lowestScore = currentScore;
+                }
+                if (lowestScore < bestKeySizeScore)
+                {
+                    bestKeySizeScore = lowestScore;
+                    bestKeySize = x;
+                }
+
+                Console.WriteLine($"After testing all possibilities with key length {x}, the best score is {lowestScore}" +
+    $"\nThe current best key length is {bestKeySize} with a score of {bestKeySizeScore}");
+            }
+
+            return bestKeySize;
+        }
+
+        /// <summary>
+        /// Finds the encryption key used to encrypt the cipher text and explains the process
+        /// </summary>
+        /// <param name="keyLength">The length of the key to find</param>
+        /// <returns>The encryption key</returns>
+        public string FindEncryptionKeyAndExplain(byte keyLength)
+        {
+            StringAnalyzer analyzer = new StringAnalyzer();
+
+            StringBuilder keyFound = new StringBuilder();
+
+            double currentScore;
+            double lowestScore;
+            byte lowestScoreIndex;
+
+            foreach (string cipher in Vigenere.SeparateStrings(cipherText, keyLength))
+            {
+                Console.WriteLine("Press any key to continue");
+                Console.ReadKey(); //hold so you can read previous data
+                Console.Clear(); //clear the console
+                Console.WriteLine($"Current key discovered: {keyFound.ToString()}");
+                analyzer.Clear();
+
+
+
+                analyzer.Analyze(Caesar.Decrypt(cipher, 'A'));
+                lowestScore = analyzer.DeviationFromStandardFrequency;
+                lowestScoreIndex = 0;
+
+                for (byte x = 1; x < 26; x++)
+                {
+                    analyzer.Clear();
+                    analyzer.Analyze(Caesar.Decrypt(cipher, (char)('A' + x)));
+                    currentScore = analyzer.DeviationFromStandardFrequency;
+
+                    if (currentScore < lowestScore)
+                    {
+                        lowestScore = currentScore;
+                        lowestScoreIndex = x;
+                    }
+                }
+
+                Console.WriteLine($"Key found: {(char)(lowestScoreIndex + 'A')} with a deviation of {lowestScore}" +
+                    $"\nFrequency analysis using this key: ");
+                analyzer.Clear();
+                analyzer.Analyze(Caesar.Decrypt(cipher, (char)(lowestScoreIndex + 'A')));
+                Console.WriteLine(analyzer.FormattedLetterFrequencies);
+
+                keyFound.Append((char)(lowestScoreIndex + 'A'));
+            }
+
+            return keyFound.ToString();
+        }
         #endregion
     }
 }
-
