@@ -6,38 +6,28 @@ Uses an unsigned integer array of length 26 to hold the total number of occurren
 
 Returns the total number of characters analyzed
 
-### HighestProbabilityCharacter
->Return type: char
+###FormattedLetterFrequencies Property
+>Return type: string 
 
-Returns the character that has appeared the most in the analysis
+Returns a string that shows the frequency of each letter analyzed
 
-### HighestProbability
->Return type: double
+###LetterFrequencies
+>Return type: IEnumerable<double> 
 
-Returns the frequency of the most common character as a percentage
+Returns the frequency of each character in order
 
-### LowestProbability
->Return type: double
+###MeanAbsoluteDeviation Property
+>Return type: double  
 
-Returns the frequency of the least common character as a percentage
+Scores the text by how many separate letters there are. Lower values are typically less correct
 
-### StringAnalyzer Constructor
->Return type: StringAnalyzer  
->Accessibility: public  
->Parameters: None  
+###DeviationFromStandardFrequency property
+>Return type: double  
 
-Default Constructor
+Scores the frequency by how close it is to a standard english frequency
 
-### Analyze
->Return type: void  
->Accessibility: public  
->Parameters: string or IEnumerable<char> textIn  
-
+### Analyze  
 Analyzes the input and tallies the total of each character
 
-### Clear
->Return type: void  
->Accessibility: public  
->Parameters: None  
-
+### Clear  
 Clears the counters for each character to reset the analyzer
