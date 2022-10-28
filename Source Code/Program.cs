@@ -18,21 +18,42 @@ namespace VigenereDecryptionTools
             	string ciphertextFile = "";
             	while (!File.Exists(ciphertextFile))
             	{
-            		Console.WriteLine("Input the CORRECT path/name of the ciphertext file");
+            		Console.WriteLine("Enter the CORRECT path/name of the ciphertext file");
             		ciphertextFile = Console.ReadLine();
             	}
-            	
+
                 Decrypter cipher = new Decrypter(File.ReadAllText(ciphertextFile));
+                string plaintext = "";
+                string key = "";
 
-                string key = cipher.FindEncryptionKey();
+                byte maxLength = 0;
+                while (maxLength == 0)
+                {
+                    Console.WriteLine("Enter the max length key to be checked");
+                    if (byte.TryParse(Console.ReadLine(), out maxLength))
+                        break;
+                    else
+                        Console.WriteLine("Invalid value. Length must be between 1 and 255 inclusive");
+                }
 
-                Console.WriteLine($"Encryption Key Found: \"{key}\"");
+                char explain = ' ';
+                while (char.ToLower(explain) != 'y' && char.ToLower(explain) != 'n')
+                {
+                    Console.WriteLine("Run decryption tool with explanations? y or n");
+                    explain = Console.ReadKey().KeyChar;
+                }
 
-                string plaintext = cipher.Decrypt(key);
+                Console.Clear();
+
+                if (explain == 'y')
+                    (key, plaintext) = cipher.DecryptAndExplain(maxLength);
+                else
+                    (key, plaintext) = cipher.Decrypt(maxLength);
+
+                Console.Clear();
                 File.WriteAllText(plaintextFile, plaintext);
-
-
-                Console.WriteLine($"\nPlaintext file has been written to {plaintextFile}\n");
+                Console.WriteLine($"Key found: {key}\n\nPlaintext written to {plaintextFile}\nPress any key to close the window");
+                Console.ReadKey();
             }
             catch (Exception e)
             {
