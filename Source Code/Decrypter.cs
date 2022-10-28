@@ -126,21 +126,26 @@ namespace VigenereDecryptionTools
         /// <summary>
         /// A wrapper for Decrypt(string) that does not require you to input the key
         /// </summary>
-        /// <returns>The decrypted plaintext</returns>
-        public string Decrypt() => Decrypt(FindEncryptionKey(20));
+        /// <returns>The key and decrypted plaintext</returns>
+        public (string, string) Decrypt(byte maxLength)
+        {
+            string key = FindEncryptionKey(maxLength);
+            return (key, Decrypt(key));
+        }
         #endregion
 
         #region Explaining
         /// <summary>
         /// Decrypts the ciphertext and explains the steps to finding the key while solving
         /// </summary>
-        public void DecryptAndExplain()
+        /// <param name="maxLength">The max length key to check</param>
+        /// <returns>The key and plaintext</returns>
+        public (string, string) DecryptAndExplain(byte maxLength)
         {
             //To decrypt the ciphertext we must find the key but to find the key the first step is to find the length of the key
             //Incorrect key lengths will have irregular letter frequencies. We can exploit this by testing different key lengths until we find a normal-looking distribution
-            string key = FindEncryptionKeyAndExplain(FindKeyLengthAndExplain(20));
-            string plain = Decrypt(key);
-            Console.WriteLine($"\n\nKey found: {key}\n\nPlaintext: {((plain.Length > 1000) ? plain.Substring(0, 1000) : plain)}");
+            string key = FindEncryptionKeyAndExplain(FindKeyLengthAndExplain(maxLength));
+            return (key, Decrypt(key));
         }
 
         /// <summary>
