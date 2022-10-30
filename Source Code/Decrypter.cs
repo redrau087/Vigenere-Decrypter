@@ -47,7 +47,7 @@ namespace VigenereDecryptionTools
             double bestKeySizeScore = 100.0;
 
 
-            for (byte x = 1; x < maxLength; x++) //max testing size is 20
+            for (byte x = 1; x < ((maxLength == Byte.MaxValue) ? maxLength : maxLength + 1); x++) //inclusive size unless max value
             {
                 analyzer.Clear();
                 cipher = Vigenere.SeparateStrings(cipherText, x).ToArray()[0];
@@ -163,7 +163,7 @@ namespace VigenereDecryptionTools
             double bestKeySizeScore = 100.0;
 
 
-            for (byte x = 1; x < maxLength; x++) //max testing size is 20
+            for (byte x = 1; x < ((maxLength == Byte.MaxValue) ? maxLength : maxLength + 1); x++)
             {
                 analyzer.Clear();
                 cipher = Vigenere.SeparateStrings(cipherText, x).ToArray()[0];
