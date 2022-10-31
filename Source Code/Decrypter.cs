@@ -50,7 +50,7 @@ namespace VigenereDecryptionTools
             for (byte x = 1; x < ((maxLength == Byte.MaxValue) ? maxLength : maxLength + 1); x++) //inclusive size unless max value
             {
                 analyzer.Clear();
-                cipher = Vigenere.SeparateStrings(cipherText, x).ToArray()[0];
+                cipher = Vigenere.SeparateStrings(cipherText, x).FirstOrDefault();
                 //we only need to check one of the new strings for frequency analysis so we can select only the first
 
                 analyzer.Analyze(cipherText);
@@ -166,7 +166,7 @@ namespace VigenereDecryptionTools
             for (byte x = 1; x < ((maxLength == Byte.MaxValue) ? maxLength : maxLength + 1); x++)
             {
                 analyzer.Clear();
-                cipher = Vigenere.SeparateStrings(cipherText, x).ToArray()[0];
+                cipher = Vigenere.SeparateStrings(cipherText, x).FirstOrDefault();
                 //we only need to check one of the new strings for frequency analysis so we can select only the first
 
                 analyzer.Analyze(cipherText);
