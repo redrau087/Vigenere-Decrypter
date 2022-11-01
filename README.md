@@ -36,7 +36,7 @@ Once you know the key length, you can adjust the single character key to best al
 To see what the code does, check the source code
 [Analyzer.cs](https://github.com/redrau087/Vigenere-Decrypter/blob/main/Source%20Code/Analyzer.cs) and [Decrypter.cs](https://github.com/redrau087/Vigenere-Decrypter/blob/main/Source%20Code/Decrypter.cs)  
 
-To run the code [Download the exe for Windows](https://github.com/redrau087/Vigenere-Decrypter/raw/main/program.exe)  
+To run the code [Download the exe for Windows](https://github.com/redrau087/Vigenere-Decrypter/raw/main/Decrypter.exe)  
 The program will automatically prompt the user for the ciphertext input file, the max key length to test, and if they would like to have each step explained as it solves  
 
 This program can take a large amount of time with large cipher texts (around a minute for the provided cipher text) due to the amount of statistical analysis being performed for accuracy
