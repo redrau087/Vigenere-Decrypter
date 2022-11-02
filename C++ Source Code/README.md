@@ -1,5 +1,7 @@
 # C++
 
+> The c++ code uses a slightly modified version of the provided code along with SplitString.cpp which I wrote
+
 ### Install the compiler  
 1. Open cmd as an admin  
 2. Run the command  
