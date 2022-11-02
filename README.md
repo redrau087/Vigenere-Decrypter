@@ -1,7 +1,7 @@
 # Vigenere-Decryptor
 A program to find the key for a given ciphertext which was encrypted with a Vigenere cipher using frequency analysis
 
->Developed for Computer Security Project 1
+>Developed for Computer Security Project 1 by Travis Rau
 
 This decryption tool decrypts the Vigenere Cipher using frequency analysis
 
