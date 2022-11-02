@@ -1,12 +1,21 @@
 # C++
 
-### To Compile  
-1. Using either clang++ or g++ (I will use clang++ for showing)
-2. Compile each program
-> clang++ -o callingFileName fileToCompile   
-> Ex: clang++ -o decrypt Decrypt.cpp  
+### Install the compiler  
+1. Open cmd as an admin  
+2. Run the command  
+> choco install mingw  
+3. Agree and proceed to install GCC
 
-3. Run the files using ./callingFileName
+### To Compile
+
+1. Using g++ (in gcc)
+2. Compile each program
+> g++ -o callingFileName fileToCompile   
+> Ex: g++ -o decrypt Decrypt.cpp  
+
+3. Run the files using callingFileName
+> Ex: g++ -o decrypt Decrypt.cpp  
+> decrypt ciphertext.txt
 
 
 ### To Solve 
