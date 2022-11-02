@@ -5,7 +5,7 @@
 
 int main(int argc, char** argv) {
     if (argc != 3){
-        std::cout << "Incorrect call. Run as \"./programName ciphertextFile keyLength\"";
+        std::cout << "Incorrect call. Run as \"programName ciphertextFile keyLength\"";
 	return 0;
     }
 
@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
     std::string fileName = "splitCipherText";
     std::string currentName;
     for (int x = 0; x < keyLength; x++){
-        currentName = fileName + std::to_string(x);
+        currentName = fileName + std::to_string(x) + ".txt";
         outputFiles[x].open(currentName);
     }
 

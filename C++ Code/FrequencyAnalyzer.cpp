@@ -8,7 +8,7 @@
 
 int main(int argc, char** argv) {
     if (argc != 2){
-        std::cout << "Incorrect call. Run as \"./programName fileToAnalyze\"";
+        std::cout << "Incorrect call. Run as \"programName fileToAnalyze\"";
         return 0;
     }
     std::string text, lineOfText, cleanText;

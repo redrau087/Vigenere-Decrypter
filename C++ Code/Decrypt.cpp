@@ -4,7 +4,7 @@
 // Make sure that the key is only uppercase letters
 int main(int argc, char **argv) {
     if (argc != 3) {
-        std::cout << "Incorrect call. Run as \"./programName ciphertextFile decryptionKey\"";
+        std::cout << "Incorrect call. Run as \"programName ciphertextFile decryptionKey\"";
 	return 0;
     }
     std::string key(argv[2]);
