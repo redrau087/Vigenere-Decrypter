@@ -3,7 +3,7 @@
 ### To Compile  
 1. Using either clang++ or g++ (I will use clang++ for showing)
 2. Compile each program
-> clang++ -o callingFileName fileToCompile 
+> clang++ -o callingFileName fileToCompile   
 > Ex: clang++ -o decrypt Decrypt.cpp  
 
 3. Run the files using ./callingFileName
